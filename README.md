@@ -26,3 +26,17 @@ export FLOCK_USER_MANAGEMENT_DEVELOPMENT_HOST="change-me"
 Once they are set and available to the user that will be running the node app
 make sure you run first `sequelize db:migrate`. This will run all migrations
 necessary to get your database up to date to the current schema.
+
+## Running the API
+
+Fairly easy to get the app started, just run
+
+```
+npm run start
+```
+
+You can also run it in debug mode for extra runtime info
+
+```
+DEBUG=api npm run start
+```
