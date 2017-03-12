@@ -36,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
                 User.hasMany(models.Session);
             },
             usersForIndex: function() {
-                return this.findAll({order: 'createdAt DESC'});
+                return this.findAll({order: '"createdAt" DESC'});
             }
         }
     });
