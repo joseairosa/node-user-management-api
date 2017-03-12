@@ -166,4 +166,47 @@ describe('API', function() {
                 .expect(200, done);
         });
     });
+
+    describe('POST /session', function() {
+        it('responds with a 200 OK for a valid session', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function() {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: 'squall@finalfantasy.viii',
+                            password: '12345678'
+                        })
+                        .expect(200, done);
+                });
+        });
+
+        it('responds with a 500 ERROR for an invalid session', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function() {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: 'squall@finalfantasy.viii',
+                            password: '87654321'
+                        })
+                        .expect(500, done);
+                });
+        });
+    });
+
 });
