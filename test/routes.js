@@ -8,4 +8,5 @@ chai.should();
 // User Index Route Tests
 describe('Route tests', function () {
     require('./user_index_route')(sinon);
+    require('./user_create_route')(sinon);
 });

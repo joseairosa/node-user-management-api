@@ -30,4 +30,17 @@ describe('loading express', function() {
                 .expect(200, done);
         });
     });
+
+    describe('POST /users', function() {
+        it('responds with a 200 OK', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii'
+                })
+                .expect(200, done);
+        });
+    });
 });

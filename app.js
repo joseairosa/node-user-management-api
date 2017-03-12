@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', routes.index);
 const users = routes.users;
 app.get('/users', users.index);
+app.post('/users', users.create);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
