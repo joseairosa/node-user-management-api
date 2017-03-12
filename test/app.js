@@ -46,29 +46,29 @@ describe('API', function() {
 
     describe('GET /users/:id', function() {
         it('responds with a 200 OK', function testSlash(done) {
-          request(server)
-              .post('/users')
-              .send({
-                  first_name: 'Squall',
-                  last_name: 'Lionheart',
-                  email: 'squall@finalfantasy.viii',
-                  password: '12345678'
-              })
-              .end(function(){
-                request(server)
-                  .get('/users/1')
-                  .expect(200)
-                  .expect({
-                      'id': 1,
-                      'first_name': 'Squall',
-                      'last_name': 'Lionheart',
-                      'email': 'squall@finalfantasy.viii'
-                  })
-                  .end(function(err, res) {
-                      if (err) return done(err);
-                      done();
-                  });
-              })
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function() {
+                    request(server)
+                        .get('/users/1')
+                        .expect(200)
+                        .expect({
+                            'id': 1,
+                            'first_name': 'Squall',
+                            'last_name': 'Lionheart',
+                            'email': 'squall@finalfantasy.viii'
+                        })
+                        .end(function(err, res) {
+                            if (err) return done(err);
+                            done();
+                        });
+                })
         });
     });
 
@@ -139,16 +139,18 @@ describe('API', function() {
                     email: 'squall@finalfantasy.viii',
                     password: '12345678'
                 })
-            request(server)
-                .delete('/users/999')
-                .expect(500)
-                .expect({
-                    "error": {},
-                    "message": 'Cannot find user ID 999'
-                })
-                .end(function(err, res) {
-                    if (err) return done(err);
-                    done();
+                .end(function() {
+                    request(server)
+                        .delete('/users/999')
+                        .expect(500)
+                        .expect({
+                            "error": {},
+                            "message": 'Cannot find user ID 999'
+                        })
+                        .end(function(err, res) {
+                            if (err) return done(err);
+                            done();
+                        });
                 });
         });
     });
