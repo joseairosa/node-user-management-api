@@ -1,4 +1,4 @@
-# User Management node API [![Build Status](https://travis-ci.org/joseairosa/node-user-management-api.svg?branch=master)](https://travis-ci.org/joseairosa/node-user-management-api)
+# User Management node API [![Build Status](https://travis-ci.org/joseairosa/node-user-management-api.svg?branch=master)](https://travis-ci.org/joseairosa/node-user-management-api) [![Coverage Status](https://coveralls.io/repos/github/joseairosa/node-user-management-api/badge.svg?branch=master)](https://coveralls.io/github/joseairosa/node-user-management-api?branch=master)
 
 API used for managing user access, account creating and deletion
 
