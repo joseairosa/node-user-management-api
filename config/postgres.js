@@ -4,8 +4,7 @@ module.exports = {
     username: process.env.FLOCK_USER_MANAGEMENT_DEVELOPMENT_USERNAME,
     password: process.env.FLOCK_USER_MANAGEMENT_DEVELOPMENT_PASSWORD,
     host: process.env.FLOCK_USER_MANAGEMENT_DEVELOPMENT_HOST,
-    dialect: 'postgres',
-    logging: true
+    dialect: 'postgres'
   },
   test: {
     database: process.env.FLOCK_USER_MANAGEMENT_TEST_DATABASE,
