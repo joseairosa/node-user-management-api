@@ -50,10 +50,14 @@ module.exports = function(models) {
                 .findById(req.params.id)
                 .then(
                     function(user) {
-                        res.json(user);
+                        if (null === user) {
+                            return next(new Error('Cannot find user ID ' + req.params.id));
+                        } else {
+                            res.json(user);
+                        }
                     },
                     function(err) {
-                        return next(new Error('Cannot find user ID ' + req.params.id));
+                        return next(new Error('Error occured retrieving user ID ' + req.params.id));
                     });
         },
         /**
@@ -102,7 +106,9 @@ module.exports = function(models) {
                 .then(
                     function(affectedRows) {
                         if (affectedRows > 0) {
-                            res.json({deleted: true});
+                            res.json({
+                                deleted: true
+                            });
                         } else {
                             return next(new Error('Cannot find user ID ' + req.params.id));
                         }

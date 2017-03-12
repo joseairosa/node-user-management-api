@@ -84,6 +84,18 @@ module.exports = function(sinon) {
             args[0].should.equal(users);
         });
 
+        it('Calls next with a specific error message if user not found', function() {
+            var users = null;
+
+            // Call the promise reject function
+            var errorMessage = 'Cannot find user ID 1';
+            promiseMock.then.getCall(0).args[0](users);
+
+            // Expectancy
+            next.should.have.been.calledOnce;
+            next.should.have.been.calledWith(new Error(errorMessage));
+        });
+
         it('Calls next with a error message', function() {
             // Call the promise reject function
             var errorMessage = 'Cannot find user ID 1';
