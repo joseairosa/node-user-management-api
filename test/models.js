@@ -16,10 +16,8 @@ function log(msg) {
     logOutput += msg + '\n';
 }
 
-sequelize = new Sequelize('', '', '', {
-    dialect: 'postgres',
-    logging: log
-});
+var config = require('../config/postgres.js')['test'];
+sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 // Load model definitions
 models = require('../models')(sequelize);
@@ -30,9 +28,8 @@ describe('Model tests', function() {
     beforeEach(function(done) {
         sequelize.sync({
                 force: true
-            })
-            .success(function() {
-                done();
+            }).then(function(){
+              done();
             });
     });
 
