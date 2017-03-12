@@ -6,8 +6,14 @@ const request = require('supertest');
 const http = require('http');
 const app = require('../app');
 
-const port = 3001
+const Sequelize = require('sequelize');
+var sequelize;
+const config = require('../config/postgres.js')['test'];
+sequelize = new Sequelize(config.database, config.username, config.password, config);
 
+const app = require('../app')(sequelize);
+
+const port = 3001
 app.set('port', port);
 
 describe('loading express', function() {

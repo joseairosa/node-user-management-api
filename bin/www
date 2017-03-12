@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 const name = 'User Management API'
-const app = require('../app');
+const app = require('../app')({});
 const debug = require('debug')('api');
 const http = require('http');
 
