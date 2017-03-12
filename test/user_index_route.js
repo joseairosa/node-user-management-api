@@ -6,6 +6,8 @@ module.exports = function(sinon) {
         var promiseMock;
         // Object to mock the response
         var response;
+        // Object to mock next handler
+        var next;
         // Users route
         var user
 
@@ -14,7 +16,7 @@ module.exports = function(sinon) {
         }
 
         function callUserIndexRoute() {
-            user.index({}, response);
+            user.index({}, response, next);
         }
 
         beforeEach(function() {
@@ -29,20 +31,21 @@ module.exports = function(sinon) {
             response.json = sinon.stub();
             response.status = sinon.stub();
 
+            next = sinon.stub();
+
             user = requireUser({
                 User: usersMock
             });
+
+            callUserIndexRoute();
         });
 
         it('calls Users.usersForIndex', function() {
-            callUserIndexRoute();
-
             // Expectancy
             usersMock.usersForIndex.should.have.been.calledOnce;
         });
 
         it('passes resolve and reject functions to User.usersForIndex', function() {
-            callUserIndexRoute();
             var args = promiseMock.then.getCall(0).args;
 
             // Should be called with two arguments
@@ -54,8 +57,6 @@ module.exports = function(sinon) {
         });
 
         it('Calls the render json function', function() {
-            callUserIndexRoute();
-
             // Call the promise resolve function
             promiseMock.then.getCall(0).args[0]({});
 
@@ -63,9 +64,8 @@ module.exports = function(sinon) {
             response.json.should.have.been.calledOnce;
         });
 
-        it('Passes the users to the render function', function() {
+        it('Passes the users to the render json function', function() {
             var users = {};
-            callUserIndexRoute();
 
             // Call the promise resolve function
             promiseMock.then.getCall(0).args[0](users);
@@ -76,9 +76,7 @@ module.exports = function(sinon) {
             args[0].should.equal(users);
         });
 
-        it('Sends a 500 status on error', function() {
-            callUserIndexRoute();
-
+        it('calls next with a error message', function() {
             // Call the promise reject function
             var errorMessage = "There was an error";
             promiseMock.then.getCall(0).args[1]({
@@ -86,10 +84,8 @@ module.exports = function(sinon) {
             });
 
             // Expectancy
-            response.status.should.have.been.calledOnce;
-            response.status.should.have.been.calledWith(500);
-            response.json.should.have.been.calledOnce;
-            response.json.should.have.been.calledWith({message: errorMessage});
+            next.should.have.been.calledOnce;
+            next.should.have.been.calledWith(new Error('Error creating user: ' + errorMessage));
         });
     });
 }

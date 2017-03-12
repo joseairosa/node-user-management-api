@@ -42,6 +42,7 @@ module.exports = function(sequelize, models) {
                     .should.be.rejected.notify(done);
             });
         });
+
         describe('User.usersForIndex', function() {
             function addUserFixture(offsetSeconds) {
                 return models.User.create({

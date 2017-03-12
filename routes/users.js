@@ -7,29 +7,31 @@ module.exports = function(models) {
          * @param req
          * @param res
          */
-        index: function(req, res) {
-            models.User.usersForIndex()
+        index: function(req, res, next) {
+            models.User
+                .usersForIndex()
                 .then(function(users) {
                         res.json(users);
                     },
                     function(err) {
-                        res.status(500);
-                        res.json(err);
+                        return next(new Error('Error listing users'));
                     });
         },
-        create: function(req, res) {
-            models.User.create({
-                first_name: req.body.first_name,
-                last_name: req.body.last_name,
-                email: req.body.email
-            }).then(
-                function(user) {
-                    res.json(user);
-                },
-                function(err) {
-                    res.status(500);
-                    res.json(err);
-                });
+        create: function(req, res, next) {
+            models.User
+                .create({
+                    first_name: req.body.first_name,
+                    last_name: req.body.last_name,
+                    email: req.body.email
+                })
+                .then(
+                    function(user) {
+                        res.json(user);
+                    },
+                    function(err) {
+                        return next(new Error('Error creating user: ' + err.message));
+                    });
+        },
         }
     }
 };

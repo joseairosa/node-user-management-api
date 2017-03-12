@@ -8,6 +8,8 @@ module.exports = function(sinon) {
         var request;
         // Object to mock the response
         var response;
+        // Object to mock next handler
+        var next;
         // Users route
         var user
 
@@ -16,7 +18,7 @@ module.exports = function(sinon) {
         }
 
         function callUserCreateRoute() {
-            user.create(request, response);
+            user.create(request, response, next);
         }
 
         beforeEach(function() {
@@ -38,13 +40,17 @@ module.exports = function(sinon) {
             response.json = sinon.stub();
             response.status = sinon.stub();
 
+            next = sinon.stub();
+
             user = requireUser({
                 User: usersMock
             });
+
+            callUserCreateRoute();
         });
 
         it('calls Users.create with correct parameters', function() {
-            callUserCreateRoute(request);
+            // Expectancy
             usersMock.create.should.have.been.calledOnce;
             usersMock.create.should.have.been.calledWith({
                 first_name: 'Squall',
@@ -54,45 +60,43 @@ module.exports = function(sinon) {
         });
 
         it('passes resolve and reject functions to User.create', function() {
-            callUserCreateRoute(request);
             var args = promiseMock.then.getCall(0).args;
             // Should be called with two arguments
             args.length.should.equal(2);
-            // Both arguments should be functions
+            // Expectancy - Both arguments should be functions
             args[0].should.be.a.function;
             args[1].should.be.a.function;
         });
 
         it('Calls the render json function', function() {
-            callUserCreateRoute(request);
             // Call the promise resolve function
             promiseMock.then.getCall(0).args[0]({});
+            // Expectancy
             response.json.should.have.been.calledOnce;
         });
 
-        it('Passes the created user to the render function', function() {
+        it('Passes the created user to the render json function', function() {
             var user = {};
-            callUserCreateRoute(request);
+            
             // Call the promise resolve function
             promiseMock.then.getCall(0).args[0](user);
             var args = response.json.getCall(0).args
+
+            // Expectancy
             args.length.should.equal(1);
             args[0].should.equal(user);
         });
 
-        it('Sends a 500 status on error and respective error message', function() {
-            callUserCreateRoute(request);
+        it('calls next with a error message', function() {
             // Call the promise reject function
             var errorMessage = "There was an error";
             promiseMock.then.getCall(0).args[1]({
                 message: errorMessage
             });
-            response.status.should.have.been.calledOnce;
-            response.status.should.have.been.calledWith(500);
-            response.json.should.have.been.calledOnce;
-            response.json.should.have.been.calledWith({
-                message: errorMessage
-            });
+
+            // Expectancy
+            next.should.have.been.calledOnce;
+            next.should.have.been.calledWith(new Error('Error creating user: ' + errorMessage));
         });
     });
 }
