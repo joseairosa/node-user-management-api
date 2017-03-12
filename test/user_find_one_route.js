@@ -50,7 +50,7 @@ module.exports = function(sinon) {
         it('calls Users.findById', function() {
             // Expectancy
             usersMock.findById.should.have.been.calledOnce;
-            usersMock.findById.should.have.been.calledWith(1)
+            usersMock.findById.should.have.been.calledWith(1);
         });
 
         it('passes resolve and reject functions to User.findById', function() {
