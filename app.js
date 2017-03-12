@@ -24,6 +24,7 @@ app.get('/', routes.index);
 const users = routes.users;
 app.get('/users', users.index);
 app.get('/users/:id', users.findOne);
+app.put('/users/:id', users.update);
 app.post('/users', users.create);
 
 // catch 404 and forward to error handler

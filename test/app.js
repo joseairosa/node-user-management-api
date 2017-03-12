@@ -39,6 +39,36 @@ describe('loading express', function() {
         });
     });
 
+    describe('PUT /users/:id', function() {
+        it('responds with a 200 OK', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii'
+                })
+            request(server)
+                .put('/users/1')
+                .send({
+                    first_name: 'Rinoa',
+                    last_name: 'Heartilly',
+                    email: 'rinoa@finalfantasy.viii'
+                })
+                .expect(200)
+                .expect({
+                    "id": 1,
+                    "first_name": "Rinoa",
+                    "last_name": "Heartilly",
+                    "email": "rinoa@finalfantasy.viii"
+                })
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
+
     describe('POST /users', function() {
         it('responds with a 200 OK', function testSlash(done) {
             request(server)
