@@ -43,6 +43,10 @@ You can also run it in debug mode for extra runtime info:
 DEBUG=api npm start
 ```
 
+## Interacting with the API
+
+Please check the [documentation](DOCUMENTATION.md)
+
 ## Tests
 
 Run the tests with:
