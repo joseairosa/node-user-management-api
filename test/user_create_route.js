@@ -73,7 +73,7 @@ module.exports = function(sinon) {
         it('Calls the render json function', function() {
             var user = {};
             var expectedParameters = 'safe';
-            var mockUser = {
+            var userMock = {
                 dataValues: user,
                 safeParameters: function() {
                     return expectedParameters;
@@ -81,7 +81,7 @@ module.exports = function(sinon) {
             };
 
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0](mockUser);
+            promiseMock.then.getCall(0).args[0](userMock);
             // Expectancy
             response.json.should.have.been.calledOnce;
         });
@@ -89,7 +89,7 @@ module.exports = function(sinon) {
         it('Passes the created user safe parameters to the render json function', function() {
             var user = {};
             var expectedParameters = 'safe';
-            var mockUser = {
+            var userMock = {
                 dataValues: user,
                 safeParameters: function() {
                     return expectedParameters;
@@ -97,7 +97,7 @@ module.exports = function(sinon) {
             };
 
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0](mockUser);
+            promiseMock.then.getCall(0).args[0](userMock);
             var args = response.json.getCall(0).args
 
             // Expectancy
