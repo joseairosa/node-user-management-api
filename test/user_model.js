@@ -12,5 +12,30 @@ module.exports = function(sequelize, models) {
                 })
                 .should.not.be.rejected.notify(done);
         });
+
+        it('should not be valid without a first_name', function(done) {
+            models.User.create({
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii'
+                })
+                .should.be.rejected.notify(done);
+        });
+
+        it('should not be valid without a last_name', function(done) {
+            models.User.create({
+                    first_name: 'Squall',
+                    email: 'squall@finalfantasy.viii'
+                })
+                .should.be.rejected.notify(done);
+        });
+
+
+        it('should not be valid without an email', function(done) {
+            models.User.create({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart'
+                })
+                .should.be.rejected.notify(done);
+        });
     });
 };
