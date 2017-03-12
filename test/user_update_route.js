@@ -12,6 +12,17 @@ module.exports = function(sinon) {
         var next;
         // Users route
         var user
+        // User
+        var userDataMock = {}
+        // Safe parameters mock
+        var expectedSafeParameters = 'safe';
+        // Result user mock, normally coming from the database
+        var resultUserMock = {
+          dataValues: userDataMock,
+          safeParameters: function() {
+              return expectedSafeParameters;
+          }
+        };
 
         function requireUser(models) {
             return require('../routes/users.js')(models);
@@ -29,7 +40,8 @@ module.exports = function(sinon) {
                 body: {
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 }
             }
 
@@ -58,7 +70,8 @@ module.exports = function(sinon) {
             usersMock.update.should.have.been.calledWith({
                 first_name: 'Squall',
                 last_name: 'Lionheart',
-                email: 'squall@finalfantasy.viii'
+                email: 'squall@finalfantasy.viii',
+                password: '12345678'
             });
         });
 
@@ -74,50 +87,32 @@ module.exports = function(sinon) {
         });
 
         it('Calls the render json function', function() {
-            var users = {}
-            var resultArray = {
-              dataValues: users
-            };
 
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0]([1, resultArray]);
+            promiseMock.then.getCall(0).args[0]([1, resultUserMock]);
 
             // Expectancy
             response.json.should.have.been.calledOnce;
         });
 
         it('Passes the updated user to the render json function', function() {
-            var users = {}
-            var resultArray = {
-              dataValues: users
-            };
-
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0]([1, resultArray]);
+            promiseMock.then.getCall(0).args[0]([1, resultUserMock]);
             var args = response.json.getCall(0).args
 
             // Expectancy
             args.length.should.equal(1);
-            args[0].should.equal(users);
+            args[0].should.equal(expectedSafeParameters);
         });
 
         it('Filters out fields that we do not want to expose in the response', function() {
-            var users = {
-              createdAt: '1',
-              updatedAt: '2',
-            };
-            var updatedUser = {};
-            var resultArray = {
-              dataValues: users
-            };
-
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0]([1, resultArray]);
+            promiseMock.then.getCall(0).args[0]([1, resultUserMock]);
             var args = response.json.getCall(0).args
 
             // Expectancy
             args.length.should.equal(1);
-            args[0].should.deep.equal(updatedUser);
+            args[0].should.deep.equal(expectedSafeParameters);
         });
 
         it('Calls next with a error message', function() {

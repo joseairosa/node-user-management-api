@@ -51,7 +51,8 @@ describe('API', function() {
               .send({
                   first_name: 'Squall',
                   last_name: 'Lionheart',
-                  email: 'squall@finalfantasy.viii'
+                  email: 'squall@finalfantasy.viii',
+                  password: '12345678'
               })
               .end(function(){
                 request(server)
@@ -78,7 +79,8 @@ describe('API', function() {
                 .send({
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 })
                 .end(function() {
                     request(server)
@@ -86,7 +88,8 @@ describe('API', function() {
                         .send({
                             first_name: 'Rinoa',
                             last_name: 'Heartilly',
-                            email: 'rinoa@finalfantasy.viii'
+                            email: 'rinoa@finalfantasy.viii',
+                            password: '12345678'
                         })
                         .expect(200)
                         .expect({
@@ -110,7 +113,8 @@ describe('API', function() {
                 .send({
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 })
                 .end(function() {
                     request(server)
@@ -132,7 +136,8 @@ describe('API', function() {
                 .send({
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 })
             request(server)
                 .delete('/users/999')
@@ -155,7 +160,8 @@ describe('API', function() {
                 .send({
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 })
                 .expect(200, done);
         });

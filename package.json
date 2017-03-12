@@ -8,6 +8,7 @@
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.16.1",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
@@ -20,7 +21,8 @@
     "morgan": "~1.7.0",
     "pg": "^6.1.4",
     "pg-hstore": "^2.3.2",
-    "proxyquire": "^1.7.11",
+    "proxyquire": "^1.7.11",    
+    "pryjs": "^1.0.3",
     "pug": "^2.0.0-beta11",
     "q": "^1.4.1",
     "request": "^2.81.0",

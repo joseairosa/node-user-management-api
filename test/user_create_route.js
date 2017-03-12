@@ -26,7 +26,8 @@ module.exports = function(sinon) {
                 body: {
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 }
             }
 
@@ -55,7 +56,8 @@ module.exports = function(sinon) {
             usersMock.create.should.have.been.calledWith({
                 first_name: 'Squall',
                 last_name: 'Lionheart',
-                email: 'squall@finalfantasy.viii'
+                email: 'squall@finalfantasy.viii',
+                password: '12345678'
             });
         });
 
@@ -69,22 +71,38 @@ module.exports = function(sinon) {
         });
 
         it('Calls the render json function', function() {
+            var user = {};
+            var expectedParameters = 'safe';
+            var mockUser = {
+                dataValues: user,
+                safeParameters: function() {
+                    return expectedParameters;
+                }
+            };
+
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0]({});
+            promiseMock.then.getCall(0).args[0](mockUser);
             // Expectancy
             response.json.should.have.been.calledOnce;
         });
 
-        it('Passes the created user to the render json function', function() {
+        it('Passes the created user safe parameters to the render json function', function() {
             var user = {};
+            var expectedParameters = 'safe';
+            var mockUser = {
+                dataValues: user,
+                safeParameters: function() {
+                    return expectedParameters;
+                }
+            };
 
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0](user);
+            promiseMock.then.getCall(0).args[0](mockUser);
             var args = response.json.getCall(0).args
 
             // Expectancy
             args.length.should.equal(1);
-            args[0].should.equal(user);
+            args[0].should.deep.equal(expectedParameters);
         });
 
         it('Calls next with a error message', function() {
