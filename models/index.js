@@ -9,7 +9,7 @@ module.exports = function(sequelize) {
     var config = require(__dirname + '/../config/postgres.js')[env];
     var db = {};
 
-    if (sequelize === {}) {
+    if (Object.keys(sequelize).length === 0) {
       if (config.use_env_variable) {
           sequelize = new Sequelize(process.env[config.use_env_variable]);
       } else {
