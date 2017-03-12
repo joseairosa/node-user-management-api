@@ -53,7 +53,7 @@ $ curl http://localhost:3000/users/1
 #### Request
 
 ```
-$ curl -X POST -d "first_name=Jose&last_name=Airosa&email=me%40joseairosa.com" http://localhost:3000/users
+$ curl -X POST -d "first_name=Jose&last_name=Airosa&email=me%40joseairosa.com&password=12345678" http://localhost:3000/users
 ```
 
 #### Response
@@ -74,7 +74,7 @@ $ curl -X POST -d "first_name=Jose&last_name=Airosa&email=me%40joseairosa.com" h
 #### Request
 
 ```
-$ curl -X PUT -d "first_name=Squall&last_name=Lionheart&email=squall%40finalfantasy.viii" http://localhost:3000/users/1
+$ curl -X PUT -d "first_name=Squall&last_name=Lionheart&email=squall%40finalfantasy.viii&password=12345678" http://localhost:3000/users/1
 ```
 
 #### Response
