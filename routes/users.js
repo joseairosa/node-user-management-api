@@ -85,6 +85,31 @@ module.exports = function(models) {
                     function(err) {
                         return next(new Error('Error updating user: ' + err.message));
                     });
+        },
+        /**
+         * Update a user based on the provided user id
+         * @param req
+         * @param res
+         * @param next
+         */
+        delete: function(req, res, next) {
+            models.User
+                .destroy({
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                .then(
+                    function(affectedRows) {
+                        if (affectedRows > 0) {
+                            res.json({deleted: true});
+                        } else {
+                            return next(new Error('Cannot find user ID ' + req.params.id));
+                        }
+                    },
+                    function(err) {
+                        return next(new Error('Error deleting user: ' + err.message));
+                    });
         }
     }
 };
