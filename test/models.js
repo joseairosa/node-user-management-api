@@ -17,6 +17,7 @@ function log(msg) {
 }
 
 var config = require('../config/postgres.js')['test'];
+// config.logging = log;
 sequelize = new Sequelize(config.database, config.username, config.password, config);
 
 // Load model definitions
