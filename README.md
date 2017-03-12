@@ -1,4 +1,4 @@
-# User Management node API
+# User Management node API [![Build Status](https://travis-ci.org/joseairosa/node-user-management-api.svg?branch=master)](https://travis-ci.org/joseairosa/node-user-management-api)
 
 API used for managing user access, account creating and deletion
 
@@ -67,3 +67,13 @@ export FLOCK_USER_MANAGEMENT_TEST_HOST="change-me"
 
 Note: Do not use this database for anything apart from tests. It will be
 completely deleted every time you run the tests.
+
+## Deploying
+
+This service is currently deployed to heroku under `https://node-user-management-dev.herokuapp.com`.
+
+Deployement is currently handled continuously:
+
+- Commit to master
+- Runs tests in travis-ci
+- If tests pass heroku will deploy the API
