@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', routes.index);
 const users = routes.users;
 app.get('/users', users.index);
+app.get('/users/:id', users.findOne);
 app.post('/users', users.create);
 
 // catch 404 and forward to error handler
@@ -36,7 +37,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   const message = err.message;
-  const error = req.app.get('env') === 'development' ? err : {};
+  const error = 'development' === req.app.get('env') ? err : {};
 
   // render the error page
   res.status(err.status || 500);

@@ -32,6 +32,16 @@ module.exports = function(models) {
                         return next(new Error('Error creating user: ' + err.message));
                     });
         },
+        findOne: function(req, res, next) {
+            models.User
+                .findById(req.params.id)
+                .then(
+                    function(user) {
+                        res.json(user);
+                    },
+                    function(err) {
+                        return next(new Error('Cannot find user ID ' + req.params.id));
+                    });
         }
     }
 };

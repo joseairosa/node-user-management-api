@@ -31,6 +31,14 @@ describe('loading express', function() {
         });
     });
 
+    describe('GET /users/:id', function() {
+        it('responds with a 200 OK', function testSlash(done) {
+            request(server)
+                .get('/users/1')
+                .expect(200, done);
+        });
+    });
+
     describe('POST /users', function() {
         it('responds with a 200 OK', function testSlash(done) {
             request(server)
