@@ -19,8 +19,9 @@ module.exports = function(sequelize) {
   app.use(express.static(path.join(__dirname, 'public')));
 
   // Routes
-  app.get('/', routes.index);
   const users = routes.users;
+  const sessions = routes.sessions;
+  app.get('/', routes.index);
   app.get('/users', users.index);
   app.get('/users/:id', users.findOne);
   app.put('/users/:id', users.update);
