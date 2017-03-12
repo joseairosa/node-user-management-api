@@ -4,7 +4,6 @@ const expect = chai.expect();
 const sinon = require('sinon');
 const request = require('supertest');
 const http = require('http');
-const app = require('../app');
 
 const Sequelize = require('sequelize');
 var sequelize;
@@ -16,7 +15,7 @@ const app = require('../app')(sequelize);
 const port = 3001
 app.set('port', port);
 
-describe('loading express', function() {
+describe('API', function() {
     var server;
     var users_route;
 
