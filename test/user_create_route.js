@@ -49,7 +49,7 @@ module.exports = function(sinon) {
             callUserCreateRoute();
         });
 
-        it('calls Users.create with correct parameters', function() {
+        it('Calls Users.create with correct parameters', function() {
             // Expectancy
             usersMock.create.should.have.been.calledOnce;
             usersMock.create.should.have.been.calledWith({
@@ -59,7 +59,7 @@ module.exports = function(sinon) {
             });
         });
 
-        it('passes resolve and reject functions to User.create', function() {
+        it('Passes resolve and reject functions to User.create', function() {
             var args = promiseMock.then.getCall(0).args;
             // Should be called with two arguments
             args.length.should.equal(2);
@@ -87,9 +87,9 @@ module.exports = function(sinon) {
             args[0].should.equal(user);
         });
 
-        it('calls next with a error message', function() {
+        it('Calls next with a error message', function() {
             // Call the promise reject function
-            var errorMessage = "'Error creating user: There was an error";
+            var errorMessage = 'Error creating user: There was an error';
             promiseMock.then.getCall(0).args[1]({
                 message: errorMessage
             });

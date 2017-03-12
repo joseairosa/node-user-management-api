@@ -8,7 +8,7 @@ module.exports = function(sequelize, models) {
 
     describe('User Model', function() {
         describe('Validations', function() {
-            it('should create a model with valid properties', function(done) {
+            it('Should create a model with valid properties', function(done) {
                 models.User.create({
                         first_name: 'Squall',
                         last_name: 'Lionheart',
@@ -17,7 +17,7 @@ module.exports = function(sequelize, models) {
                     .should.not.be.rejected.notify(done);
             });
 
-            it('should not be valid without a first_name', function(done) {
+            it('Should not be valid without a first_name', function(done) {
                 models.User.create({
                         last_name: 'Lionheart',
                         email: 'squall@finalfantasy.viii'
@@ -25,7 +25,7 @@ module.exports = function(sequelize, models) {
                     .should.be.rejected.notify(done);
             });
 
-            it('should not be valid without a last_name', function(done) {
+            it('Should not be valid without a last_name', function(done) {
                 models.User.create({
                         first_name: 'Squall',
                         email: 'squall@finalfantasy.viii'
@@ -34,7 +34,7 @@ module.exports = function(sequelize, models) {
             });
 
 
-            it('should not be valid without an email', function(done) {
+            it('Should not be valid without an email', function(done) {
                 models.User.create({
                         first_name: 'Squall',
                         last_name: 'Lionheart'
@@ -65,16 +65,16 @@ module.exports = function(sequelize, models) {
                 });
             });
 
-            it('should define a function "usersForIndex"', function() {
+            it('Should define a function "usersForIndex"', function() {
                 should.exist(models.User.usersForIndex);
             });
 
-            it('returns all the users from the database', function(done) {
+            it('Returns all the users from the database', function(done) {
                 models.User.usersForIndex()
                     .should.eventually.have.length(4).notify(done);
             });
 
-            it('should return all the user models in created order', function(done) {
+            it('Should return all the user models in created order', function(done) {
                 models.User.usersForIndex()
                     .then(function(users) {
                         var t = new Date().getTime();

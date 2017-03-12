@@ -47,13 +47,13 @@ module.exports = function(sinon) {
             callUserFindOneRoute();
         });
 
-        it('calls Users.findById', function() {
+        it('Calls Users.findById', function() {
             // Expectancy
             usersMock.findById.should.have.been.calledOnce;
             usersMock.findById.should.have.been.calledWith(1);
         });
 
-        it('passes resolve and reject functions to User.findById', function() {
+        it('Passes resolve and reject functions to User.findById', function() {
             var args = promiseMock.then.getCall(0).args;
 
             // Should be called with two arguments
@@ -84,9 +84,9 @@ module.exports = function(sinon) {
             args[0].should.equal(users);
         });
 
-        it('calls next with a error message', function() {
+        it('Calls next with a error message', function() {
             // Call the promise reject function
-            var errorMessage = "'Cannot find user ID 1";
+            var errorMessage = 'Cannot find user ID 1';
             promiseMock.then.getCall(0).args[1]({
                 message: errorMessage
             });

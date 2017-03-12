@@ -40,12 +40,12 @@ module.exports = function(sinon) {
             callUserIndexRoute();
         });
 
-        it('calls Users.usersForIndex', function() {
+        it('Calls Users.usersForIndex', function() {
             // Expectancy
             usersMock.usersForIndex.should.have.been.calledOnce;
         });
 
-        it('passes resolve and reject functions to User.usersForIndex', function() {
+        it('Passes resolve and reject functions to User.usersForIndex', function() {
             var args = promiseMock.then.getCall(0).args;
 
             // Should be called with two arguments
@@ -76,7 +76,7 @@ module.exports = function(sinon) {
             args[0].should.equal(users);
         });
 
-        it('calls next with a error message', function() {
+        it('Calls next with a error message', function() {
             // Call the promise reject function
             var errorMessage = 'Error listing users';
             promiseMock.then.getCall(0).args[1]({

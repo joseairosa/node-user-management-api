@@ -52,7 +52,7 @@ module.exports = function(sinon) {
             callUserUpdateRoute();
         });
 
-        it('calls Users.update', function() {
+        it('Calls Users.update', function() {
             // Expectancy
             usersMock.update.should.have.been.calledOnce;
             usersMock.update.should.have.been.calledWith({
@@ -62,7 +62,7 @@ module.exports = function(sinon) {
             });
         });
 
-        it('passes resolve and reject functions to User.update', function() {
+        it('Passes resolve and reject functions to User.update', function() {
             var args = promiseMock.then.getCall(0).args;
 
             // Should be called with two arguments
@@ -120,9 +120,9 @@ module.exports = function(sinon) {
             args[0].should.deep.equal(updatedUser);
         });
 
-        it('calls next with a error message', function() {
+        it('Calls next with a error message', function() {
             // Call the promise reject function
-            var errorMessage = "'Error updating user: There was an error";
+            var errorMessage = 'Error updating user: There was an error';
             promiseMock.then.getCall(0).args[1]({
                 message: errorMessage
             });
