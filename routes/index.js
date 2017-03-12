@@ -11,8 +11,12 @@ module.exports = function(models) {
           res.json({});
         },
         /**
-         * include routes for blog
+         * include routes for users
          */
-        users: require('./users')(models)
+        users: require('./users')(models),
+        /**
+         * include routes for sessions
+         */
+        sessions: require('./sessions')(models)
     };
 };
