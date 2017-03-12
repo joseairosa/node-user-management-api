@@ -209,4 +209,53 @@ describe('API', function() {
         });
     });
 
+    describe('GET /session/:user_id/:uuid', function() {
+        it('responds with a 200 OK for a valid session', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function(user_err, user_res) {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: user_res.body.email,
+                            password: '12345678'
+                        })
+                        .end(function(session_err, session_res) {
+                            request(server)
+                                .get('/session/' + user_res.body.id + '/' + session_res.body.uuid)
+                                .expect(200, done);
+                        })
+                });
+        });
+
+        it('responds with a 500 ERROR for an invalid session', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function(user_err, user_res) {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: user_res.body.email,
+                            password: '12345678'
+                        })
+                        .end(function(session_err, session_res) {
+                            request(server)
+                                .get('/session/' + user_res.body.id + '/hello')
+                                .expect(200, done);
+                        })
+                });
+        });
+    });
 });

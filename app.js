@@ -28,6 +28,7 @@ module.exports = function(sequelize) {
   app.post('/users', users.create);
   app.delete('/users/:id', users.delete);
   app.post('/session', sessions.create);
+  app.get('/session/:user_id/:uuid', sessions.validate);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

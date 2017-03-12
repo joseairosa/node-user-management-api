@@ -3,6 +3,26 @@ module.exports = function(models) {
 
     return {
         /**
+         * Attempts to validate a session using user_id and session uuid
+         * @param req
+         * @param res
+         * @param next
+         */
+        validate: function(req, res, next) {
+            models.Session.findOne({
+                where: {
+                    UserId: req.params.user_id,
+                    uuid: req.params.uuid
+                }
+            }).then(
+                function(session) {
+                    res.json({valid: true});
+                },
+                function(err) {
+                    return next(new Error('Invalid session'));
+                });
+        },
+        /**
          * Create a session based on valid user credentials
          * @param req
          * @param res
