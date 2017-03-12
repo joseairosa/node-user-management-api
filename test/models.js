@@ -40,4 +40,5 @@ describe('Model tests', function() {
     });
 
     require('./user_model')(sequelize, models);
+    require('./session_model')(sequelize, models);
 });
