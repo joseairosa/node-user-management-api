@@ -30,6 +30,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     }, {
+        timestamps: true,
         classMethods: {
             associate: function(models) {
                 User.hasMany(models.Session);
