@@ -19,6 +19,14 @@ describe('API', function() {
     var server;
     var users_route;
 
+    before(function(done) {
+        sequelize.sync({
+            force: true
+        }).then(function() {
+            done();
+        });
+    });
+
     beforeEach(function() {
         server = http.createServer(app);
         server.listen(port);
