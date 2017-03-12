@@ -54,6 +54,15 @@ module.exports = function(models) {
                 function(err) {
                     return next(new Error('Could not find user'));
                 });
+        },
+        /**
+         * Destroy a session based on a uuid
+         * @param req
+         * @param res
+         * @param next
+         */
+         delete: function(req, res, next) {
+           // TODO - Implement
          }
     }
 };
