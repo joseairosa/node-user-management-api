@@ -90,7 +90,7 @@ module.exports = function(models) {
                         res.json(resultArray[1].dataValues);
                     },
                     function(err) {
-                        return next(new Error('Error updating user: ' + err.message));
+                        return next(new Error('Error updating user. Make sure user ID ' + req.params.id + ' exists.'));
                     });
         },
         /**
