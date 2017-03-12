@@ -53,7 +53,10 @@ module.exports = function(models) {
                         if (null === user) {
                             return next(new Error('Cannot find user ID ' + req.params.id));
                         } else {
-                            res.json(user);
+                            var filteredUser = user.dataValues;
+                            delete filteredUser.createdAt;
+                            delete filteredUser.updatedAt;
+                            res.json(filteredUser);
                         }
                     },
                     function(err) {

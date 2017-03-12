@@ -65,23 +65,35 @@ module.exports = function(sinon) {
         });
 
         it('Calls the render json function', function() {
+            var user = {}
+            var mockUser = {
+              dataValues: user
+            };
+
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0]({});
+            promiseMock.then.getCall(0).args[0](mockUser);
 
             // Expectancy
             response.json.should.have.been.calledOnce;
         });
 
-        it('Passes the users to the render json function', function() {
-            var users = {};
+        it('Filters out fields that we do not want to expose in the response and passes it to the render json function', function() {
+            var user = {
+              createdAt: '1',
+              updatedAt: '2',
+            };
+            var mockUser = {
+              dataValues: user
+            };
+            var expectedUser = {};
 
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0](users);
+            promiseMock.then.getCall(0).args[0](mockUser);
             var args = response.json.getCall(0).args
 
             // Expectancy
             args.length.should.equal(1);
-            args[0].should.equal(users);
+            args[0].should.deep.equal(expectedUser);
         });
 
         it('Calls next with a specific error message if user not found', function() {

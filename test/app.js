@@ -46,9 +46,28 @@ describe('API', function() {
 
     describe('GET /users/:id', function() {
         it('responds with a 200 OK', function testSlash(done) {
-            request(server)
-                .get('/users/1')
-                .expect(200, done);
+          request(server)
+              .post('/users')
+              .send({
+                  first_name: 'Squall',
+                  last_name: 'Lionheart',
+                  email: 'squall@finalfantasy.viii'
+              })
+              .end(function(){
+                request(server)
+                  .get('/users/1')
+                  .expect(200)
+                  .expect({
+                      'id': 1,
+                      'first_name': 'Squall',
+                      'last_name': 'Lionheart',
+                      'email': 'squall@finalfantasy.viii'
+                  })
+                  .end(function(err, res) {
+                      if (err) return done(err);
+                      done();
+                  });
+              })
         });
     });
 
