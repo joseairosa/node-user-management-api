@@ -24,9 +24,9 @@ module.exports = function(sinon) {
         beforeEach(function() {
             response = {};
             request = {
-              params: {
-                id: 1
-              }
+                params: {
+                    id: 1
+                }
             }
 
             promiseMock = {};
@@ -34,6 +34,7 @@ module.exports = function(sinon) {
 
             usersMock = {};
             usersMock.findById = sinon.stub().returns(promiseMock);
+            usersMock.safeParameters = sinon.stub().returns({});
 
             response.json = sinon.stub();
             response.status = sinon.stub();
@@ -67,7 +68,10 @@ module.exports = function(sinon) {
         it('Calls the render json function', function() {
             var user = {}
             var mockUser = {
-              dataValues: user
+                dataValues: user,
+                safeParameters: function() {
+                    return 'safe';
+                }
             };
 
             // Call the promise resolve function
@@ -75,17 +79,21 @@ module.exports = function(sinon) {
 
             // Expectancy
             response.json.should.have.been.calledOnce;
+            response.json.should.have.been.calledWith('safe');
         });
 
         it('Filters out fields that we do not want to expose in the response and passes it to the render json function', function() {
             var user = {
-              createdAt: '1',
-              updatedAt: '2',
+                createdAt: '1',
+                updatedAt: '2',
             };
             var mockUser = {
-              dataValues: user
+                dataValues: user,
+                safeParameters: function() {
+                    return 'safe';
+                }
             };
-            var expectedUser = {};
+            var expectedParameters = 'safe';
 
             // Call the promise resolve function
             promiseMock.then.getCall(0).args[0](mockUser);
@@ -93,7 +101,7 @@ module.exports = function(sinon) {
 
             // Expectancy
             args.length.should.equal(1);
-            args[0].should.deep.equal(expectedUser);
+            args[0].should.deep.equal(expectedParameters);
         });
 
         it('Calls next with a specific error message if user not found', function() {

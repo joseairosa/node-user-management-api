@@ -46,28 +46,29 @@ describe('API', function() {
 
     describe('GET /users/:id', function() {
         it('responds with a 200 OK', function testSlash(done) {
-          request(server)
-              .post('/users')
-              .send({
-                  first_name: 'Squall',
-                  last_name: 'Lionheart',
-                  email: 'squall@finalfantasy.viii'
-              })
-              .end(function(){
-                request(server)
-                  .get('/users/1')
-                  .expect(200)
-                  .expect({
-                      'id': 1,
-                      'first_name': 'Squall',
-                      'last_name': 'Lionheart',
-                      'email': 'squall@finalfantasy.viii'
-                  })
-                  .end(function(err, res) {
-                      if (err) return done(err);
-                      done();
-                  });
-              })
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function() {
+                    request(server)
+                        .get('/users/1')
+                        .expect(200)
+                        .expect({
+                            'id': 1,
+                            'first_name': 'Squall',
+                            'last_name': 'Lionheart',
+                            'email': 'squall@finalfantasy.viii'
+                        })
+                        .end(function(err, res) {
+                            if (err) return done(err);
+                            done();
+                        });
+                })
         });
     });
 
@@ -78,7 +79,8 @@ describe('API', function() {
                 .send({
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 })
                 .end(function() {
                     request(server)
@@ -86,7 +88,8 @@ describe('API', function() {
                         .send({
                             first_name: 'Rinoa',
                             last_name: 'Heartilly',
-                            email: 'rinoa@finalfantasy.viii'
+                            email: 'rinoa@finalfantasy.viii',
+                            password: '12345678'
                         })
                         .expect(200)
                         .expect({
@@ -110,7 +113,8 @@ describe('API', function() {
                 .send({
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 })
                 .end(function() {
                     request(server)
@@ -132,18 +136,21 @@ describe('API', function() {
                 .send({
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 })
-            request(server)
-                .delete('/users/999')
-                .expect(500)
-                .expect({
-                    "error": {},
-                    "message": 'Cannot find user ID 999'
-                })
-                .end(function(err, res) {
-                    if (err) return done(err);
-                    done();
+                .end(function() {
+                    request(server)
+                        .delete('/users/999')
+                        .expect(500)
+                        .expect({
+                            "error": {},
+                            "message": 'Cannot find user ID 999'
+                        })
+                        .end(function(err, res) {
+                            if (err) return done(err);
+                            done();
+                        });
                 });
         });
     });
@@ -155,9 +162,102 @@ describe('API', function() {
                 .send({
                     first_name: 'Squall',
                     last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii'
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
                 })
                 .expect(200, done);
+        });
+    });
+
+    describe('POST /session', function() {
+        it('responds with a 200 OK for a valid session', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function() {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: 'squall@finalfantasy.viii',
+                            password: '12345678'
+                        })
+                        .expect(200, done);
+                });
+        });
+
+        it('responds with a 500 ERROR for an invalid session', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function() {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: 'squall@finalfantasy.viii',
+                            password: '87654321'
+                        })
+                        .expect(500, done);
+                });
+        });
+    });
+
+    describe('GET /session/:user_id/:uuid', function() {
+        it('responds with a 200 OK for a valid session', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function(user_err, user_res) {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: user_res.body.email,
+                            password: '12345678'
+                        })
+                        .end(function(session_err, session_res) {
+                            request(server)
+                                .get('/session/' + user_res.body.id + '/' + session_res.body.uuid)
+                                .expect(200, done);
+                        })
+                });
+        });
+
+        it('responds with a 500 ERROR for an invalid session', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: 'Squall',
+                    last_name: 'Lionheart',
+                    email: 'squall@finalfantasy.viii',
+                    password: '12345678'
+                })
+                .end(function(user_err, user_res) {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: user_res.body.email,
+                            password: '12345678'
+                        })
+                        .end(function(session_err, session_res) {
+                            request(server)
+                                .get('/session/' + user_res.body.id + '/hello')
+                                .expect(200, done);
+                        })
+                });
         });
     });
 });

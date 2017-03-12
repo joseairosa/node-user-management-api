@@ -29,11 +29,12 @@ module.exports = function(models) {
                 .create({
                     first_name: req.body.first_name,
                     last_name: req.body.last_name,
-                    email: req.body.email
+                    email: req.body.email,
+                    password: req.body.password
                 })
                 .then(
                     function(user) {
-                        res.json(user);
+                        res.json(user.safeParameters());
                     },
                     function(err) {
                         return next(new Error('Error creating user: ' + err.message));
@@ -53,10 +54,7 @@ module.exports = function(models) {
                         if (null === user) {
                             return next(new Error('Cannot find user ID ' + req.params.id));
                         } else {
-                            var filteredUser = user.dataValues;
-                            delete filteredUser.createdAt;
-                            delete filteredUser.updatedAt;
-                            res.json(filteredUser);
+                            res.json(user.safeParameters());
                         }
                     },
                     function(err) {
@@ -74,7 +72,8 @@ module.exports = function(models) {
                 .update({
                     first_name: req.body.first_name,
                     last_name: req.body.last_name,
-                    email: req.body.email
+                    email: req.body.email,
+                    password: req.body.password
                 }, {
                     where: {
                         id: req.params.id
@@ -84,10 +83,8 @@ module.exports = function(models) {
                 })
                 .then(
                     function(resultArray) {
-                        var updateUser = resultArray[1].dataValues;
-                        delete updateUser.createdAt;
-                        delete updateUser.updatedAt;
-                        res.json(resultArray[1].dataValues);
+                        var updateUser = resultArray[1];
+                        res.json(updateUser.safeParameters());
                     },
                     function(err) {
                         return next(new Error('Error updating user. Make sure user ID ' + req.params.id + ' exists.'));
