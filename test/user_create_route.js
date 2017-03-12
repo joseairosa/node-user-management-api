@@ -77,7 +77,7 @@ module.exports = function(sinon) {
 
         it('Passes the created user to the render json function', function() {
             var user = {};
-            
+
             // Call the promise resolve function
             promiseMock.then.getCall(0).args[0](user);
             var args = response.json.getCall(0).args
@@ -89,14 +89,14 @@ module.exports = function(sinon) {
 
         it('calls next with a error message', function() {
             // Call the promise reject function
-            var errorMessage = "There was an error";
+            var errorMessage = "'Error creating user: There was an error";
             promiseMock.then.getCall(0).args[1]({
                 message: errorMessage
             });
 
             // Expectancy
             next.should.have.been.calledOnce;
-            next.should.have.been.calledWith(new Error('Error creating user: ' + errorMessage));
+            next.should.have.been.calledWith(new Error(errorMessage));
         });
     });
 }

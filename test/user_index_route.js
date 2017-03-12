@@ -78,14 +78,14 @@ module.exports = function(sinon) {
 
         it('calls next with a error message', function() {
             // Call the promise reject function
-            var errorMessage = "There was an error";
+            var errorMessage = 'Error listing users';
             promiseMock.then.getCall(0).args[1]({
                 message: errorMessage
             });
 
             // Expectancy
             next.should.have.been.calledOnce;
-            next.should.have.been.calledWith(new Error('Error creating user: ' + errorMessage));
+            next.should.have.been.calledWith(new Error(errorMessage));
         });
     });
 }

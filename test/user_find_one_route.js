@@ -50,6 +50,7 @@ module.exports = function(sinon) {
         it('calls Users.findById', function() {
             // Expectancy
             usersMock.findById.should.have.been.calledOnce;
+            usersMock.findById.should.have.been.calledWith(1)
         });
 
         it('passes resolve and reject functions to User.findById', function() {
@@ -85,14 +86,14 @@ module.exports = function(sinon) {
 
         it('calls next with a error message', function() {
             // Call the promise reject function
-            var errorMessage = "There was an error";
+            var errorMessage = "'Cannot find user ID 1";
             promiseMock.then.getCall(0).args[1]({
                 message: errorMessage
             });
 
             // Expectancy
             next.should.have.been.calledOnce;
-            next.should.have.been.calledWith(new Error('Error creating user: ' + errorMessage));
+            next.should.have.been.calledWith(new Error(errorMessage));
         });
     });
 }
