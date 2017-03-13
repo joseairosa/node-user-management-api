@@ -51,8 +51,8 @@ module.exports = function(sequelize, DataTypes) {
                     msg: 'Password is required'
                 },
                 len: {
-                  args: [6, Infinity],
-                  msg: 'Weak password detected, use more than 5 characters'
+                    args: [6, Infinity],
+                    msg: 'Weak password detected, use more than 5 characters'
                 }
             }
         }

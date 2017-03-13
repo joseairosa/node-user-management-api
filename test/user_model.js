@@ -147,7 +147,9 @@ module.exports = function(sequelize, models) {
                     addUserFixture()
                 ]).then(function() {
                     userPromise = models.User.findOne({
-                        where: { email: "squall@finalfantasy.viii" }
+                        where: {
+                            email: "squall@finalfantasy.viii"
+                        }
                     });
                     done();
                 });
