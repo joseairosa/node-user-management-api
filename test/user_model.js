@@ -66,16 +66,16 @@ module.exports = function(sequelize, models) {
         describe('Uniqueness', function() {
             it('Should not be valid if the email is already registered', function(done) {
                 models.User.create({
-                        first_name: 'Squall',
-                        last_name: 'Lionheart',
+                        first_name: faker.name.firstName(),
+                        last_name: faker.name.firstName(),
                         email: 'squall@finalfantasy.viii',
-                        password: '12345678'
+                        password: faker.internet.password()
                     }).then(function() {
                       models.User.create({
-                              first_name: 'Squall',
-                              last_name: 'Lionheart',
+                              first_name: faker.name.firstName(),
+                              last_name: faker.name.firstName(),
                               email: 'squall@finalfantasy.viii',
-                              password: '12345678'
+                              password: faker.internet.password()
                           })
                           .should.be.rejected.notify(done);
 

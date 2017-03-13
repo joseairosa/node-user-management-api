@@ -25,14 +25,12 @@ module.exports = function(sequelize, DataTypes) {
         email: {
             type: DataTypes.STRING,
             defaultValue: '',
+            isUnique: true,
             validate: {
                 notEmpty: {
                     msg: 'Email is required'
-                }
-            },
-            unique: {
-                args: true,
-                msg: 'Email address already in use!'
+                },
+                isUnique: sequelize.validateIsUnique('email', 'That email is being used. Please choose a different email address')
             }
         },
         password_digest: {

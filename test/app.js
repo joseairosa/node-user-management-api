@@ -87,10 +87,10 @@ describe('API', function() {
             request(server)
                 .post('/users')
                 .send({
-                    first_name: faker.name.firstName(),
-                    last_name: faker.name.lastName(),
-                    email: faker.internet.email(),
-                    password: faker.internet.password()
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
                 })
                 .end(function() {
                     request(server)
@@ -121,10 +121,10 @@ describe('API', function() {
             request(server)
                 .post('/users')
                 .send({
-                    first_name: faker.name.firstName(),
-                    last_name: faker.name.lastName(),
-                    email: faker.internet.email(),
-                    password: faker.internet.password()
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
                 })
                 .end(function() {
                     request(server)
@@ -144,10 +144,10 @@ describe('API', function() {
             request(server)
                 .post('/users')
                 .send({
-                    first_name: faker.name.firstName(),
-                    last_name: faker.name.lastName(),
-                    email: faker.internet.email(),
-                    password: faker.internet.password()
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
                 })
                 .end(function() {
                     request(server)
@@ -170,12 +170,34 @@ describe('API', function() {
             request(server)
                 .post('/users')
                 .send({
-                    first_name: faker.name.firstName(),
-                    last_name: faker.name.lastName(),
-                    email: faker.internet.email(),
-                    password: faker.internet.password()
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
                 })
                 .expect(200, done);
+        });
+
+        it("responds with a 500 ERROR if there's already a user with the same email", function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
+                })
+                .end(function(user_err, user_res) {
+                    request(server)
+                        .post('/users')
+                        .send({
+                            first_name: faker.name.firstName(),
+                            last_name: faker.name.lastName(),
+                            email: user_res.body.email,
+                            password: faker.internet.password()
+                        })
+                        .expect(500, done);
+                });
         });
     });
 
@@ -184,17 +206,17 @@ describe('API', function() {
             request(server)
                 .post('/users')
                 .send({
-                    first_name: 'Squall',
-                    last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii',
-                    password: '12345678'
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
                 })
-                .end(function() {
+                .end(function(user_err, user_res) {
                     request(server)
                         .post('/session')
                         .send({
-                            email: 'squall@finalfantasy.viii',
-                            password: '12345678'
+                            email: user_res.body.email,
+                            password: password
                         })
                         .expect(200, done);
                 });
@@ -204,16 +226,16 @@ describe('API', function() {
             request(server)
                 .post('/users')
                 .send({
-                    first_name: 'Squall',
-                    last_name: 'Lionheart',
-                    email: 'squall@finalfantasy.viii',
-                    password: '12345678'
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
                 })
-                .end(function() {
+                .end(function(user_err, user_res) {
                     request(server)
                         .post('/session')
                         .send({
-                            email: 'squall@finalfantasy.viii',
+                            email: user_res.body.email,
                             password: '87654321'
                         })
                         .expect(500, done);
