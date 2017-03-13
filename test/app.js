@@ -292,4 +292,54 @@ describe('API', function() {
                 });
         });
     });
+
+    describe('DELETE /session/:uuid', function() {
+        it('responds with a 200 OK when user deleted', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
+                })
+                .end(function(user_err, user_res) {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: user_res.body.email,
+                            password: password
+                        })
+                        .end(function(session_err, session_res) {
+                            request(server)
+                                .delete('/session/' + session_res.body.uuid)
+                                .expect(200, done);
+                        })
+                });
+        });
+
+        it('responds with a 500 ERROR when user cannot be found for deletion', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
+                })
+                .end(function(user_err, user_res) {
+                    request(server)
+                        .post('/session')
+                        .send({
+                            email: user_res.body.email,
+                            password: password
+                        })
+                        .end(function(session_err, session_res) {
+                            request(server)
+                                .delete('/session/hello-thar')
+                                .expect(500, done);
+                        })
+                });
+        });
+    });
 });

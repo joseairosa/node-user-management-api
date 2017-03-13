@@ -37,7 +37,7 @@ module.exports = function(sinon) {
                     email: 'squall@finalfantasy.viii',
                     password: '12345678'
                 }
-            }
+            };
 
             userModelPromiseMock = {};
             userModelPromiseMock.then = sinon.spy();

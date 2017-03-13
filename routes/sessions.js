@@ -16,8 +16,10 @@ module.exports = function(models) {
                 }
             }).then(
                 function(session) {
-                    if(session) {
-                        res.json({valid: true});
+                    if (session) {
+                        res.json({
+                            valid: true
+                        });
                     } else {
                         return next(new Error('Invalid session'));
                     }
@@ -46,7 +48,9 @@ module.exports = function(models) {
                             })
                             .then(
                                 function(session) {
-                                    res.json({uuid: session.uuid});
+                                    res.json({
+                                        uuid: session.uuid
+                                    });
                                 },
                                 function(err) {
                                     return next(new Error('Error creating session: ' + err.message));
@@ -65,8 +69,26 @@ module.exports = function(models) {
          * @param res
          * @param next
          */
-         delete: function(req, res, next) {
-           // TODO - Implement
-         }
+        delete: function(req, res, next) {
+            models.Session
+                .destroy({
+                    where: {
+                        uuid: req.params.uuid
+                    }
+                })
+                .then(
+                    function(affectedRows) {
+                        if (affectedRows > 0) {
+                            res.json({
+                                deleted: true
+                            });
+                        } else {
+                            return next(new Error('Cannot find session ' + req.params.uuid));
+                        }
+                    },
+                    function(err) {
+                        return next(new Error('Error deleting session: ' + err.message));
+                    });
+        }
     }
 };

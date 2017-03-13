@@ -14,4 +14,5 @@ describe('Route tests', function () {
     require('./user_delete_route')(sinon);
     require('./session_create_route')(sinon);
     require('./session_validate_route')(sinon);
+    require('./session_delete_route')(sinon);
 });
