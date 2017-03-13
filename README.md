@@ -86,7 +86,7 @@ Deployement is currently handled continuously:
 
 - [ ] Apply safe parameters to when listing all users
 - [ ] Improve test coverage
-- [ ] Delete sessions (logging out)
+- [x] Delete sessions (logging out)
 - [ ] Enforce session expiration, currently there's nothing expiring those sessions
 - [ ] Add more fields to the user model
 - [ ] Better logging strategy
