@@ -90,3 +90,4 @@ Deployement is currently handled continuously:
 - [ ] Enforce session expiration, currently there's nothing expiring those sessions
 - [ ] Add more fields to the user model
 - [ ] Better logging strategy
+- [ ] Cleanup tests a bit more by removing unused variables, ex: test/session_delete_route.js
