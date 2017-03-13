@@ -137,3 +137,19 @@ $ curl http://localhost:3000/session/3/9d28f19a-6edc-4198-967a-6f7e2f7b972c
     "valid": true
 }
 ```
+
+## Delete a session
+
+#### Request
+
+```
+$ curl -X DELETE http://localhost:3000/session/9d28f19a-6edc-4198-967a-6f7e2f7b972c
+```
+
+#### Response
+
+```
+{
+    "deleted":true
+}
+```
