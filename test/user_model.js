@@ -3,6 +3,7 @@ module.exports = function(sequelize, models) {
 
     const Q = require('q');
     const should = require('chai').should();
+    const faker = require('faker');
 
     var User;
 
@@ -85,10 +86,10 @@ module.exports = function(sequelize, models) {
         describe('User.usersForIndex', function() {
             function addUserFixture(offsetSeconds) {
                 return models.User.create({
-                    first_name: 'Squall',
-                    last_name: 'Lionheart',
-                    email: 'squall2@finalfantasy.viii',
-                    password: '1234567',
+                    first_name: faker.name.firstName(),
+                    last_name: faker.name.lastName(),
+                    email: faker.internet.email(),
+                    password: faker.internet.password(),
                     createdAt: new Date(new Date().getTime() - (offsetSeconds * 1000))
                 });
             }
