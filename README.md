@@ -84,6 +84,7 @@ Deployement is currently handled continuously:
 
 ## Roadmap
 
+- [ ] Apply safe parameters to when listing all users
 - [ ] Improve test coverage
 - [ ] Delete sessions (logging out)
 - [ ] Enforce session expiration, currently there's nothing expiring those sessions
