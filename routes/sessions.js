@@ -16,7 +16,11 @@ module.exports = function(models) {
                 }
             }).then(
                 function(session) {
-                    res.json({valid: true});
+                    if(session) {
+                        res.json({valid: true});
+                    } else {
+                        return next(new Error('Invalid session'));
+                    }
                 },
                 function(err) {
                     return next(new Error('Invalid session'));

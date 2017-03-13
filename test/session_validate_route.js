@@ -41,7 +41,7 @@ module.exports = function(sinon) {
 
             authenticateMock = sinon.stub();
             userMock = {
-              id: 1
+                id: 1
             };
             userMock.authenticate = sinon.stub().returns(authenticateMock);
 
@@ -79,12 +79,29 @@ module.exports = function(sinon) {
             sessionModelMock.findOne.should.have.been.calledWith(expectedOptions);
         });
 
-        it('Calls the render json function with correct message', function() {
-            sessionModelPromiseMock.then.getCall(0).args[0](sessionMock);
+        describe('Valid session', function() {
+            it('Calls the render json function with correct message', function() {
+                sessionModelPromiseMock.then.getCall(0).args[0](sessionMock);
 
-            // Expectancy
-            response.json.should.have.been.calledOnce;
-            response.json.should.have.been.calledWith({valid: true});
+                // Expectancy
+                response.json.should.have.been.calledOnce;
+                response.json.should.have.been.calledWith({
+                    valid: true
+                });
+            });
+        });
+
+        describe('Invalid session', function() {
+            it('Calls next with a error message', function() {
+                sessionModelPromiseMock.then.getCall(0).args[0](null);
+
+                // Call the promise reject function
+                var errorMessage = 'Invalid session';
+
+                // Expectancy
+                next.should.have.been.calledOnce;
+                next.should.have.been.calledWith(new Error(errorMessage));
+            });
         });
 
         it('Calls next with a error message', function() {

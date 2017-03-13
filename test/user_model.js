@@ -62,6 +62,26 @@ module.exports = function(sequelize, models) {
             });
         });
 
+        describe('Uniqueness', function() {
+            it('Should not be valid if the email is already registered', function(done) {
+                models.User.create({
+                        first_name: 'Squall',
+                        last_name: 'Lionheart',
+                        email: 'squall@finalfantasy.viii',
+                        password: '12345678'
+                    }).then(function() {
+                      models.User.create({
+                              first_name: 'Squall',
+                              last_name: 'Lionheart',
+                              email: 'squall@finalfantasy.viii',
+                              password: '12345678'
+                          })
+                          .should.be.rejected.notify(done);
+
+                    });
+            });
+        });
+
         describe('User.usersForIndex', function() {
             function addUserFixture(offsetSeconds) {
                 return models.User.create({
