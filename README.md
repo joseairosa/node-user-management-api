@@ -81,3 +81,10 @@ Deployement is currently handled continuously:
 - Commit to master
 - Runs tests in travis-ci
 - If tests pass heroku will deploy the API
+
+## Roadmap
+
+- [ ] Improve test coverage
+- [ ] Delete sessions (logging out)
+- [ ] Enforce session expiration, currently there's nothing expiring those sessions
+- [ ] Add more fields to the user model
