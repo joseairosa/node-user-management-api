@@ -105,3 +105,35 @@ $ curl -X DELETE http://localhost:3000/users/2
     "deleted":true
 }
 ```
+
+## Create a new session
+
+#### Request
+
+```
+$ curl -X POST -d "email=me%40joseairosa.com&password=12345678" http://localhost:3000/session
+```
+
+#### Response
+
+```
+{
+    "uuid": "9d28f19a-6edc-4198-967a-6f7e2f7b972c"
+}
+```
+
+## Verify and validate a session
+
+#### Request
+
+```
+$ curl http://localhost:3000/session/3/9d28f19a-6edc-4198-967a-6f7e2f7b972c
+```
+
+#### Response
+
+```
+{
+    "valid": true
+}
+```
