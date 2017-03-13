@@ -1,12 +1,12 @@
 'use strict';
 
-var chai = require('chai');
-var chaiAsPromised = require('chai-as-promised');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 // Initialize Chai/Chai as promised
 chai.use(chaiAsPromised);
 chai.should();
 
-var Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 var sequelize;
 var models;
 
@@ -16,7 +16,7 @@ function log(msg) {
     logOutput += msg + '\n';
 }
 
-var config = require('../config/postgres.js')['test'];
+const config = require('../config/postgres.js')['test'];
 // config.logging = log;
 sequelize = new Sequelize(config.database, config.username, config.password, config);
 
