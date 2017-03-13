@@ -95,11 +95,23 @@ module.exports = function(sinon) {
             userMock.authenticate.should.have.been.calledWith('12345678');
         });
 
+        it('Calls next with a error message when user not found', function() {
+            callSessionCreateRoute();
+
+            // Call the promise reject function
+            var errorMessage = 'Email and Password do not match';
+            userModelPromiseMock.then.getCall(0).args[0](null);
+
+            // Expectancy
+            next.should.have.been.calledOnce;
+            next.should.have.been.calledWith(new Error(errorMessage));
+        });
+
         it('Calls next with a error message', function() {
             callSessionCreateRoute();
 
             // Call the promise reject function
-            var errorMessage = 'Could not find user';
+            var errorMessage = 'Error creating session';
             userModelPromiseMock.then.getCall(0).args[1]({
                 message: errorMessage
             });

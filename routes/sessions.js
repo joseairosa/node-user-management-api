@@ -39,7 +39,7 @@ module.exports = function(models) {
                 }
             }).then(
                 function(user) {
-                    if (user.authenticate(req.body.password)) {
+                    if (user && user.authenticate(req.body.password)) {
                         models.Session
                             .create({
                                 UserId: user.id
@@ -56,7 +56,7 @@ module.exports = function(models) {
                     }
                 },
                 function(err) {
-                    return next(new Error('Could not find user'));
+                    return next(new Error('Error creating session'));
                 });
         },
         /**

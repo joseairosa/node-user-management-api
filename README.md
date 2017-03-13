@@ -89,3 +89,4 @@ Deployement is currently handled continuously:
 - [ ] Delete sessions (logging out)
 - [ ] Enforce session expiration, currently there's nothing expiring those sessions
 - [ ] Add more fields to the user model
+- [ ] Better logging strategy
