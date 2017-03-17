@@ -47,15 +47,14 @@ describe('API', function() {
     });
 
     describe('GET /users', function() {
-        it('responds with a 200 OK', function testSlash(done) {
+        it('responds with a 200 OK and empty array when there are no registered users', function testSlash(done) {
             request(server)
                 .get('/users')
+                .expect([])
                 .expect(200, done);
         });
-    });
 
-    describe('GET /users/:id', function() {
-        it('responds with a 200 OK', function testSlash(done) {
+        it('responds with a 200 OK and an array of users when there are registered users', function testSlash(done) {
             request(server)
                 .post('/users')
                 .send({
@@ -66,13 +65,21 @@ describe('API', function() {
                 })
                 .end(function() {
                     request(server)
-                        .get('/users/1')
+                        .get('/users')
                         .expect(200)
-                        .expect({
+                        .expect([{
                             'id': 1,
                             'first_name': firstName,
                             'last_name': lastName,
                             'email': email.toLowerCase()
+                        }])
+                        .end(function(err, res) {
+                            if (err) return done(err);
+                            done();
+                        });
+                });
+        });
+    });
                         })
                         .end(function(err, res) {
                             if (err) return done(err);

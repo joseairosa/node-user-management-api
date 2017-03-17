@@ -12,7 +12,10 @@ module.exports = function(models) {
             models.User
                 .usersForIndex()
                 .then(function(users) {
-                        res.json(users);
+                        var usersSafeParameters = users.map(function(user) {
+                            return user.safeParameters();
+                        });
+                        res.json(usersSafeParameters);
                     },
                     function(err) {
                         return next(new Error('Error listing users'));

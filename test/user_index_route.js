@@ -58,14 +58,33 @@ module.exports = function(sinon) {
 
         it('Calls the render json function', function() {
             // Call the promise resolve function
-            promiseMock.then.getCall(0).args[0]({});
+            promiseMock.then.getCall(0).args[0]([]);
 
             // Expectancy
             response.json.should.have.been.calledOnce;
         });
 
+        it('Passes only safe parameters to the render json function for each user', function() {
+            var users = [];
+            var expectedParameters = 'safe';
+            var usersMock = [{
+                dataValues: user,
+                safeParameters: function() {
+                    return expectedParameters;
+                }
+            }];
+
+            // Call the promise resolve function
+            promiseMock.then.getCall(0).args[0](usersMock);
+            var args = response.json.getCall(0).args
+
+            // Expectancy
+            args.length.should.equal(1);
+            args[0].should.deep.equal([expectedParameters]);
+        });
+
         it('Passes the users to the render json function', function() {
-            var users = {};
+            var users = [];
 
             // Call the promise resolve function
             promiseMock.then.getCall(0).args[0](users);
@@ -73,7 +92,7 @@ module.exports = function(sinon) {
 
             // Expectancy
             args.length.should.equal(1);
-            args[0].should.equal(users);
+            args[0].should.deep.equal(users);
         });
 
         it('Calls next with a error message', function() {
