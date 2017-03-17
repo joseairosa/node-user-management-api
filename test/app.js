@@ -85,6 +85,23 @@ describe('API', function() {
                             if (err) return done(err);
                             done();
                         });
+        it('responds with a 500 ERROR when user cannot be found', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
+                })
+                .end(function() {
+                    request(server)
+                        .get('/users/999')
+                        .expect(500)
+                        .end(function(err, res) {
+                            if (err) return done(err);
+                            done();
+                        });
                 })
         });
     });
@@ -120,6 +137,26 @@ describe('API', function() {
                             done();
                         });
                 });
+        });
+
+        it('responds with a 500 ERROR when user cannot be found', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
+                })
+                .end(function() {
+                    request(server)
+                        .put('/users/999')
+                        .expect(500)
+                        .end(function(err, res) {
+                            if (err) return done(err);
+                            done();
+                        });
+                })
         });
     });
 
