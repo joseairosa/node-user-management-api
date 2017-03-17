@@ -80,11 +80,34 @@ describe('API', function() {
                 });
         });
     });
+
+    describe('GET /users/:id', function() {
+        it('responds with a 200 OK', function testSlash(done) {
+            request(server)
+                .post('/users')
+                .send({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    password: password
+                })
+                .end(function(user_err, user_res) {
+                    request(server)
+                        .get('/users/' + user_res.body.id)
+                        .expect(200)
+                        .expect({
+                            'id': user_res.body.id,
+                            'first_name': user_res.body.first_name,
+                            'last_name': user_res.body.last_name,
+                            'email': user_res.body.email
                         })
                         .end(function(err, res) {
                             if (err) return done(err);
                             done();
                         });
+                });
+        });
+
         it('responds with a 500 ERROR when user cannot be found', function testSlash(done) {
             request(server)
                 .post('/users')
