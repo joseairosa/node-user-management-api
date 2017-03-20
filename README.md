@@ -29,6 +29,19 @@ running the node app, make sure you first run `sequelize db:migrate`. This will
 run all migrations necessary to get your database up to date to the current
 schema.
 
+## Development with Docker
+
+Very simple. Make sure you have both `docker` and `docker-compose` installed.
+
+Once that's done simply do:
+
+```
+docker-compose up
+```
+
+This will create all the containers and inter-connectivity with everything
+running on localhost:3000 by default.
+
 ## Running the API
 
 Fairly easy to get the app started, just run:
