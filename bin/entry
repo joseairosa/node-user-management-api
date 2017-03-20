@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+bin/wait-for-it.sh postgres:5432 -- echo "postgres is up"
+
+node_modules/.bin/sequelize db:migrate
+
+npm start
